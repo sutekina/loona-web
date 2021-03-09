@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="static/img/chuu.jpg">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/base/style.css') }}"> -->
+    <!-- in production use proper stylesheet but because atm i wanna update things i will hardcode the css :) -->
+    <style>
+        body, html {
+            height: 100%;
+            font-family: 'Gilroy','Spoqa Han Sans','Apple SD Gothic Neo', 'Malgun Gothic','Nanum Gothic', 'Noto Sans','sans-serif';
+            display:flex; 
+            margin: 0;
+            flex-direction:column; 
+        }
+        a {
+            text-decoration-line: none;
+        }
+        header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-content: center;
+            background-color: black;
+            color: white;
+            padding: 1rem;
+        }
+        .header-img {
+            height: 4rem;
+            width: 25rem;
+            position:relative;
+            overflow:hidden;
+            transition: opacity 0.3s
+        }
+        .header-img img {
+            position:absolute; 
+            top:0; 
+            bottom:0; 
+            margin: auto;
+            width:100%;
+        }
+        .nav-wrapper {
+            margin-left: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .nav-button {
+            -webkit-user-select: none; /* Safari */        
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE10+/Edge */
+            user-select: none; /* Standard */
+            font-size: 3rem;
+            transition: opacity 0.3s;
+        }
+        .header-img:hover, .nav-button:hover, nav ul li:hover {
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        .nav-dropdown-inactive {
+            opacity: 0;
+            top: 4rem
+        }
+        .nav-dropdown-inactive a {
+            pointer-events: none;
+            cursor: default;
+        }
+        nav {
+            background-color: black;
+            top: 6rem;
+            right: 0;
+            min-width: 20vw;
+            transition: top 0.3s, opacity 0.3s;
+            position: absolute;
+        }
+        nav ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+        nav ul li {
+            padding: 1rem;
+            padding-right: 5rem;
+            color: white;
+            transition: opacity 0.3s;
+        }
+        nav ul hr {
+            margin: 0;
+            border-width: 1px;
+            border-style: solid;
+            background-color: white;
+        }
+    </style>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div class="header-img"><a href="/"><img src="static/img/header-thing.png" alt=""></a></div>
+        <div class="nav-wrapper">
+            <span class="nav-button">☰</span>
+            <nav class="nav nav-dropdown-inactive">
+                <ul class="nav">
+                    <a href="photos">
+                        <li>photos</li>
+                    </a>
+                    <hr>
+                    <a href="games">
+                        <li>games</li>
+                    </a>
+                </ul>
+            </nav>
+            <script>
+                var navButton = document.getElementsByClassName("nav-button")[0];
+                navButton.addEventListener("click", () => document.getElementsByClassName("nav")[0].classList.toggle("nav-dropdown-inactive"), false);
+
+                window.addEventListener("click", function(event) {
+                    if (navButton !== event.target) {
+                        var navbar = document.getElementsByClassName("nav")[0];
+                        if(!navbar.classList.contains("nav-dropdown-inactive")) {
+                            document.getElementsByClassName("nav")[0].classList.toggle("nav-dropdown-inactive");
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </header>
+    {% block content %}{% endblock %}
+</body>
+</html>
